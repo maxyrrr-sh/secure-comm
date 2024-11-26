@@ -17,8 +17,8 @@ import (
 )
 
 func encryptFile(inputPath string) (string, error) {
-	outputPath := inputPath + ".encrypted"
-	cmd := exec.Command("aes", "--encrypt", inputPath)
+	outputPath := inputPath + ".enc"
+	cmd := exec.Command("./aes", "--encrypt", inputPath)
 	err := cmd.Run()
 	if err != nil {
 		return "", fmt.Errorf("помилка шифрування AES: %v", err)

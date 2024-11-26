@@ -36,6 +36,7 @@ func sendMessage(reader *bufio.Reader) {
 	fmt.Print("Destination IP : ")
 	destinationIP, _ := reader.ReadString('\n')
 	destinationIP = strings.TrimSpace(destinationIP)
+	sourceIP, _ := GetLocalIP()
 
 	destinationPort := strings.TrimSpace("9001")
 
@@ -90,7 +91,7 @@ func sendMessage(reader *bufio.Reader) {
 	}
 
 	packet := Packet{
-		Source:      "localhost",
+		Source:      sourceIP,
 		Destination: destinationIP,
 		Certificate: "sender_cert.pem",
 		Data:        data,
@@ -106,11 +107,9 @@ func sendMessage(reader *bufio.Reader) {
 }
 
 func listenForMessages(reader *bufio.Reader) {
-	fmt.Print("Введіть локальний порт для прослуховування (наприклад, 9001): ")
-	port, _ := reader.ReadString('\n')
-	port = strings.TrimSpace(port)
+	port := strings.TrimSpace("9001")
 
-	fmt.Print("Введіть локальний IP (або localhost): ")
+	fmt.Print("Destination IP : ")
 	localIP, _ := reader.ReadString('\n')
 	localIP = strings.TrimSpace(localIP)
 	if localIP == "" {
