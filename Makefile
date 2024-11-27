@@ -15,14 +15,11 @@ all: clean build
 build: $(BIN_DIR)
 	@echo "Збірка Go проекту..."
 	cd src && go build -o ../bin/secure_comm 		
-
-	@echo "Збірка C++ проекту..."
-	g++ -std=c++17 src/aes/main.cpp -o bin/aes -lssl -lcrypto -pthread
 clean:
 	@echo "Очищення проекту..."
+	cp bin/aes aes
 	rm -rf $(BIN_DIR)/*
-	cd $(SRC_DIR) && $(GO) clean -modcache
-
+	mv aes bin/aes	
 test:
 	@echo "Запуск тестів Go..."
 	cd $(SRC_DIR) && $(GO) test ./...

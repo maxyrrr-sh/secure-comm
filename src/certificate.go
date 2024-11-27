@@ -1,22 +1,32 @@
 package main
 
 import (
+	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
-	"fmt"
-	"io/ioutil"
+	"errors"
 )
 
-func loadCertificate(certPath string) (*x509.Certificate, error) {
-	certPEMBlock, err := ioutil.ReadFile(certPath)
+// Експорт RSA публічного ключа
+func ExportPublicKey(pubKey *rsa.PublicKey) ([]byte, error) {
+	pubASN1, err := x509.MarshalPKIXPublicKey(pubKey)
 	if err != nil {
-		return nil, fmt.Errorf("помилка читання сертифіката: %v", err)
+		return nil, err
+	}
+	return pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: pubASN1}), nil
+}
+
+// Імпорт RSA публічного ключа
+func ImportPublicKey(pubPEM []byte) (*rsa.PublicKey, error) {
+	block, _ := pem.Decode(pubPEM)
+	if block == nil || block.Type != "PUBLIC KEY" {
+		return nil, errors.New("невірний PEM формат")
 	}
 
-	block, _ := pem.Decode(certPEMBlock)
-	if block == nil {
-		return nil, fmt.Errorf("не вдалося декодувати PEM")
+	pub, err := x509.ParsePKIXPublicKey(block.Bytes)
+	if err != nil {
+		return nil, err
 	}
 
-	return x509.ParseCertificate(block.Bytes)
+	return pub.(*rsa.PublicKey), nil
 }
