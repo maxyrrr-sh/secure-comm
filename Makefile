@@ -20,11 +20,6 @@ clean:
 	cp bin/aes aes
 	rm -rf $(BIN_DIR)/*
 	mv aes bin/aes	
-test:
-	@echo "Запуск тестів Go..."
-	cd $(SRC_DIR) && $(GO) test ./...
-	@echo "Запуск тестів C++..."
-	# Додайте команду для тестів C++, якщо є
 
 run: build
 	@echo "Запуск Go проекту..."
@@ -32,20 +27,3 @@ run: build
 	@echo "Запуск C++ проекту..."
 	$(BIN_DIR)/$(BINARY_NAME)_cpp
 
-install: build
-	@echo "Встановлення Go додатку..."
-	sudo cp $(BIN_DIR)/$(BINARY_NAME)_go /usr/local/bin/
-	@echo "Встановлення C++ додатку..."
-	sudo cp $(BIN_DIR)/$(BINARY_NAME)_cpp /usr/local/bin/
-	@mkdir -p /etc/secure-comm
-	@cp -r $(SRC_DIR)/keys /etc/secure-comm/ 2>/dev/null || true
-	@echo "Додатки встановлено успішно"
-
-help:
-	@echo "Доступні команди:"
-	@echo "  make            - встановити залежності та зібрати проект"
-	@echo "  make build      - зібрати проект"
-	@echo "  make install    - встановити додатки в систему"
-	@echo "  make clean      - видалити артефакти збірки"
-	@echo "  make test       - запустити тести"
-	@echo "  make run        - запустити проекти"

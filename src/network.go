@@ -7,20 +7,17 @@ import (
 	"os"
 )
 
-// Повідомлення для передачі
 type Message struct {
 	Type    string // "text" або "file"
 	Content []byte
 	Nonce   []byte
 }
 
-// Відправка повідомлення
 func SendMessage(conn net.Conn, msg Message) error {
 	encoder := json.NewEncoder(conn)
 	return encoder.Encode(msg)
 }
 
-// Отримання повідомлення
 func ReceiveMessage(conn net.Conn) (Message, error) {
 	var msg Message
 	decoder := json.NewDecoder(conn)
@@ -28,7 +25,6 @@ func ReceiveMessage(conn net.Conn) (Message, error) {
 	return msg, err
 }
 
-// Читання файлу
 func ReadFile(filepath string) ([]byte, error) {
 	file, err := os.Open(filepath)
 	if err != nil {

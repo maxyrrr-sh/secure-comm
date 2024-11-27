@@ -54,16 +54,13 @@ class AESCrypto {
             return;
         }
 
-        // Determine file size
         input.seekg(0, std::ios::end);
         size_t fileSize = input.tellg();
         input.seekg(0, std::ios::beg);
 
-        // Read entire file
         std::vector<unsigned char> buffer(fileSize);
         input.read(reinterpret_cast<char *>(buffer.data()), fileSize);
 
-        // Perform encryption/decryption
         std::vector<unsigned char> outputBuffer(fileSize + BLOCK_SIZE);
 
         EVP_CIPHER_CTX *ctx = EVP_CIPHER_CTX_new();

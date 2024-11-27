@@ -7,7 +7,6 @@ import (
 	"errors"
 )
 
-// Експорт RSA публічного ключа
 func ExportPublicKey(pubKey *rsa.PublicKey) ([]byte, error) {
 	pubASN1, err := x509.MarshalPKIXPublicKey(pubKey)
 	if err != nil {
@@ -16,7 +15,6 @@ func ExportPublicKey(pubKey *rsa.PublicKey) ([]byte, error) {
 	return pem.EncodeToMemory(&pem.Block{Type: "PUBLIC KEY", Bytes: pubASN1}), nil
 }
 
-// Імпорт RSA публічного ключа
 func ImportPublicKey(pubPEM []byte) (*rsa.PublicKey, error) {
 	block, _ := pem.Decode(pubPEM)
 	if block == nil || block.Type != "PUBLIC KEY" {
