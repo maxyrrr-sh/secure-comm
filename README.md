@@ -1,5 +1,7 @@
 Проект на прикладну криптологію.
+
 Викладач: Трушевський Валерій Миколайович
+
 Встановлення:
 git clone https://github.com/maxyrrr-sh/secure-comm.git
 cd secure-comm
