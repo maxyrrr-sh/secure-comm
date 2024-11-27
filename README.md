@@ -3,6 +3,7 @@
 Викладач: Трушевський Валерій Миколайович
 
 Робив під Лінукс
+
 Встановлення:
 
 git clone https://github.com/maxyrrr-sh/secure-comm.git
